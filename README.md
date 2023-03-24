@@ -1,4 +1,4 @@
-# personalTaskManager
+# PersonalTaskManager
 **PersonalTaskManager** is a task management project that allows users to create and manage their daily tasks in a simple and efficient way. The project will include several functionalities that will facilitate task management.
 
 - Adding tasks: Users will be able to add new tasks to their task list through a form. The form will include fields such as task name, description, date and time of execution, priority, etc.
