@@ -1,22 +1,27 @@
 class TaskRepository : IRepository<Task>
 {
-    private readonly IEnumerable<Task> tasks;
-    public TaskRepository(IEnumerable<Task> tasks)
+    private readonly List<Task> tasks;
+    public TaskRepository(List<Task> tasks)
     {
         this.tasks = tasks;
+    }
+
+    public TaskRepository()
+    {
+        this.tasks = new();
     }
     public void Add(Task entity)
     {
         this.tasks.Append(entity);
     }
 
-    public Task Get(string id)
+    public Task? Get(string id)
     {
-        throw new NotImplementedException();
+        return this.tasks.FirstOrDefault( t => t.Id.ToString() == id);
     }
 
     public IReadOnlyCollection<Task> GetAll()
     {
-        throw new NotImplementedException();
+        return this.tasks;
     }
 }

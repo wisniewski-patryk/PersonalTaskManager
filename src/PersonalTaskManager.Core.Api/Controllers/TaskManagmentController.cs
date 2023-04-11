@@ -16,6 +16,6 @@ public class TaskManagmentController : ControllerBase
     [HttpGet(Name = "tasks")]
     public ActionResult<List<Task>> GetAll()
     {
-        return Ok(tasks);
+        return Ok(this.tasks.GetAll());
     }
 }

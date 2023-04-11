@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add repository
+builder.Services.AddSingleton<IRepository<Task>, TaskRepository>();
 // builder.Services.Confi
 
 var app = builder.Build();
