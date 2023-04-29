@@ -24,4 +24,10 @@ class TaskRepository : IRepository<Task>
     {
         return this.tasks;
     }
+
+    public void Delete(string id)
+    {
+        var taskToDelete = this.tasks.FirstOrDefault(t => t.Id.ToString() == id) ?? throw new ArgumentNullException();
+        this.tasks.Remove(taskToDelete);
+    }
 }
