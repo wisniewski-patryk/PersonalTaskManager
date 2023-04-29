@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PersonalTaskManager.Core.Api.Controllers;
 
 [ApiController]
-[Route("api/v0")]
+[Route("api/v0/tasks")]
 public class TaskManagmentController : ControllerBase
 {
     private IRepository<Task> tasks;
@@ -13,9 +13,17 @@ public class TaskManagmentController : ControllerBase
         this.tasks = tasks;
     }
 
-    [HttpGet(Name = "tasks")]
+    [HttpGet()]
     public ActionResult<List<Task>> GetAll()
     {
         return Ok(this.tasks.GetAll());
+    }
+
+    [HttpPost()]
+    [Route("add")]
+    public IActionResult AddTask(Task task)
+    {
+        this.tasks.Add(task);
+        return Created("tasks",task);
     }
 }
