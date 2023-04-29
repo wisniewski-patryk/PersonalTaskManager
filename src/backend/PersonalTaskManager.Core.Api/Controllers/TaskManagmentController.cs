@@ -21,7 +21,7 @@ public class TaskManagmentController : ControllerBase
 
     [HttpPost()]
     [Route("add")]
-    public IActionResult AddTask(Task task)
+    public IActionResult AddTask([FromBody]Task task)
     {
         this.tasks.Add(task);
         return Created("tasks",task);
