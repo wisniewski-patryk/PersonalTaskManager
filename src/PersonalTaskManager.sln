@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalTaskManager.Core.Api", "PersonalTaskManager.Core.Api\PersonalTaskManager.Core.Api.csproj", "{E2AAA9AA-28A9-4F99-B84F-56B7AFCEBF95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalTaskManager.Core.Api", "backend\PersonalTaskManager.Core.Api\PersonalTaskManager.Core.Api.csproj", "{E2AAA9AA-28A9-4F99-B84F-56B7AFCEBF95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
