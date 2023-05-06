@@ -1,6 +1,7 @@
 class TaskRepository : IRepository<Task>
 {
-    private readonly List<Task> tasks;
+    private List<Task> tasks;
+
     public TaskRepository(List<Task> tasks)
     {
         this.tasks = tasks;
@@ -12,7 +13,7 @@ class TaskRepository : IRepository<Task>
     }
     public void Add(Task entity)
     {
-        this.tasks.Append(entity);
+        this.tasks.Add(entity);
     }
 
     public Task? Get(string id)
@@ -30,4 +31,17 @@ class TaskRepository : IRepository<Task>
         var taskToDelete = this.tasks.FirstOrDefault(t => t.Id.ToString() == id) ?? throw new ArgumentNullException();
         this.tasks.Remove(taskToDelete);
     }
+
+	public void Patch(Task entity, string id)
+	{
+		var taskToPatch = this.tasks.FirstOrDefault(t => t.Id.ToString() == id) ?? throw new ArgumentException();
+        if (taskToPatch.Name != entity.Name)
+        {
+            taskToPatch.Name = entity.Name;
+        }
+        if (taskToPatch.Description != entity.Description)
+        {
+            taskToPatch.Description = entity.Description;
+        }
+	}
 }
