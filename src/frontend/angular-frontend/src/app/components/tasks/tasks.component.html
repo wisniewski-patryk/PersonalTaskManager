@@ -1,4 +1,10 @@
 <div>
-	<label for="description">Task description: </label>
-	<input id="description" [(ngModel)]="task.description" placeholder="description"/>
+	<h2>MY TASKS</h2>
+	<ul class="tasks">
+		<li *ngFor="let task of tasks">
+			<a routerLink="/detail/{{ task.id }}">
+				<span class="badge">{{ task.id }}</span>{{ task.description }}
+			</a>
+		</li>
+	</ul>
 </div>
