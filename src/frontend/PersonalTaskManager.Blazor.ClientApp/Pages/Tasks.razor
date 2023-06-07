@@ -1,11 +1,12 @@
 @page "/tasks"
+@inject HttpClient httpClient
 
 <h1>Todo (@tasks.Count(task => !task.IsDone))</h1>
 
 <div class="input-group mb-3">
 	<input type="text" class="form-control" placeholder="Something todo" @bind="newTask" />
 	<input type="text" class="form-control" placeholder="Write description" @bind="newDescription"/>
-	<button class="btn btn-outline-secondary" @onclick="AddTodo">Add todo</button>
+	<button class="btn btn-secondary" @onclick="AddTodo">Add todo</button>
 
 </div>
 
@@ -19,10 +20,7 @@
 </ul>
 
 @code {
-	private List<TaskDto> tasks = new List<TaskDto>{
-			new(){Name = "zadanie 1", Description = "description 2a asda sd asd asd " },
-			new(){Name = "zadanie 2", Description = "description afasdvadfasdasfd" },
-		};
+	private List<TaskDto> tasks = new List<TaskDto>();
 	private string? newTask;
 	private string? newDescription;
 	private void AddTodo(){
@@ -30,7 +28,11 @@
 		{
 			tasks.Add(new TaskDto { Name = newTask, Description = newDescription });
 			newTask = string.Empty;
+			newDescription = string.Empty;
 		}
-
 	} 
+	protected override async Task OnInitializedAsync()
+	{
+		tasks = await this.httpClient.GetFromJsonAsync<List<TaskDto>>("/api/v0/tasks");
+	}
 }
