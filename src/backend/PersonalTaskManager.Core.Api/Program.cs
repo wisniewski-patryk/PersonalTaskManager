@@ -1,5 +1,17 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS
+var MyAllowSpecificOrgins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options => 
+    {
+        options.AddPolicy(name: MyAllowSpecificOrgins,
+            policy => 
+                {
+                    policy.WithOrigins("http://localhost:5200");
+                }
+            );
+    });
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -17,6 +29,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(); // NOTE: https://localhost:5250/swagger/index.html
+    app.UseCors(MyAllowSpecificOrgins);
 }
 
 app.UseHttpsRedirection();
