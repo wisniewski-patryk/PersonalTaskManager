@@ -1,7 +1,11 @@
+using System.Text.Json;
+using System.Net.Http.Json;
+
 internal interface ITasksCrudService
 {
 	Task Add(TaskDto task);
-	Task<IReadOnlyCollection<TaskDto>> GetAll();
+	Task<IReadOnlyCollection<TaskDto>?> GetAll();
+	Task<TaskDto?> Get(string id);
 	Task Update(string id, TaskDto task);
 	Task Delete(string id);
 }
@@ -17,12 +21,21 @@ class TasksCrudService : ITasksCrudService
 
 	public async Task Add(TaskDto task)
 	{
-		
+		var response = await httpClient.PostAsJsonAsync("/api/v0/tasks/add", task);
+		response.EnsureSuccessStatusCode();
 	}
 
 	public async Task Delete(string id)
 	{
-		throw new NotImplementedException();
+		var response = await this.httpClient.DeleteAsync($"/api/v0/tasks/{id}/delete");
+		response.EnsureSuccessStatusCode();
+	}
+
+	public async Task<TaskDto?> Get(string id)
+	{
+		var response = await this.httpClient.GetAsync($"api/v0/tasks/{id}");
+
+		return await JsonSerializer.DeserializeAsync<TaskDto>(response.Content.ReadAsStream());
 	}
 
 	public async Task<IReadOnlyCollection<TaskDto>?> GetAll()
@@ -34,6 +47,7 @@ class TasksCrudService : ITasksCrudService
 
 	public async Task Update(string id, TaskDto task)
 	{
-		throw new NotImplementedException();
+		var response = await this.httpClient.PatchAsJsonAsync($"api/v0/tasks/{id}/update", task);
+		response.EnsureSuccessStatusCode();
 	}
 }

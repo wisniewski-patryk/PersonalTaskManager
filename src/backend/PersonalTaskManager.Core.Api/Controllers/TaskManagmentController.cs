@@ -31,7 +31,7 @@ public class TaskManagmentController : ControllerBase
     public IActionResult Add([FromBody]Task task)
     {
         this.tasks.Add(task);
-        return Created("tasks",task);
+        return Created("tasks", task);
     }
 
     [HttpPatch]
@@ -43,7 +43,7 @@ public class TaskManagmentController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("{id}/delete/")]
+    [Route("{id}/delete")]
     public IActionResult Delete(string id)
     {
         this.tasks.Delete(id);
