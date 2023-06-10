@@ -1,8 +1,6 @@
 @page "/tasks"
 
-@using System.Net.Http
-@using System.Net.Http.Json
-@inject HttpClient httpClient
+@inject ITasksCrudService taskCrudService
 
 <h1>Todo</h1>
 
@@ -26,20 +24,26 @@
 	private List<TaskDto> tasks = new();
 	private string? newTask;
 	private string? newDescription;
-	private void AddTodo(){
+	private async Task AddTodo(){
 		if (!string.IsNullOrWhiteSpace(newTask))
 		{
 			if (tasks is null){
 				throw new NullReferenceException();
 			}
-			tasks.Add(new TaskDto { Name = newTask, Description = newDescription });
+			var task = new TaskDto { Name = newTask, Description = newDescription };
+			await this.taskCrudService.Add(task);
 			newTask = string.Empty;
 			newDescription = string.Empty;
+			await RefreshTaskList();
 		}
 	} 
 	protected override async Task OnInitializedAsync()
 	{
-		
-		tasks = await httpClient.GetFromJsonAsync<List<TaskDto>>("/api/v0/tasks") ?? new();
+		await RefreshTaskList();
+	}
+
+	private async Task RefreshTaskList()
+	{
+		tasks = (await this.taskCrudService.GetAll()).ToList();
 	}
 }
