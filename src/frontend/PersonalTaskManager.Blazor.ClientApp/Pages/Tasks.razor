@@ -44,6 +44,7 @@
 
 	private async Task RefreshTaskList()
 	{
-		tasks = (await this.taskCrudService.GetAll()).ToList();
+		var tasksFromApi = await this.taskCrudService.GetAll() ?? new List<TaskDto>();
+		tasks = tasksFromApi.ToList();
 	}
 }
