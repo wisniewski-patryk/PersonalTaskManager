@@ -1,0 +1,7 @@
+<div class="card" *ngIf="task">
+	<h2>{{ task.id }} Details</h2>
+	<div class="card">
+		<p>{{ task.description }}</p>
+	</div>
+	<button type="button" (click)="goBack()">go back</button>
+</div>
