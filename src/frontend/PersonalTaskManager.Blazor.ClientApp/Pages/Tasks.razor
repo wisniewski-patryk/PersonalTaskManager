@@ -1,0 +1,50 @@
+@page "/tasks"
+
+@inject ITasksCrudService taskCrudService
+
+<h1>Todo</h1>
+
+<div class="input-group mb-3">
+	<input type="text" class="form-control" placeholder="Something todo" @bind="newTask" />
+	<input type="text" class="form-control" placeholder="Write description" @bind="newDescription"/>
+	<button class="btn btn-secondary" @onclick="AddTodo">Add todo</button>
+
+</div>
+
+<ul>
+	@foreach (var task in tasks)
+	{
+		<li>
+			<TaskItem Task="task"/>
+		</li>
+	}
+</ul>
+
+@code {
+	private List<TaskDto> tasks = new();
+	private string? newTask;
+	private string? newDescription;
+	private async Task AddTodo(){
+		if (!string.IsNullOrWhiteSpace(newTask))
+		{
+			if (tasks is null){
+				throw new NullReferenceException();
+			}
+			var task = new TaskDto { Name = newTask, Description = newDescription };
+			await this.taskCrudService.Add(task);
+			newTask = string.Empty;
+			newDescription = string.Empty;
+			await RefreshTaskList();
+		}
+	} 
+	protected override async Task OnInitializedAsync()
+	{
+		await RefreshTaskList();
+	}
+
+	private async Task RefreshTaskList()
+	{
+		var tasksFromApi = await this.taskCrudService.GetAll() ?? new List<TaskDto>();
+		tasks = tasksFromApi.ToList();
+	}
+}

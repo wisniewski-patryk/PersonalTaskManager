@@ -1,0 +1,12 @@
+<div class="input-group mb-3">
+	<div class="input-group-text">
+		<input class="form-check-input mt-0" type="checkbox"/>
+	</div>
+	<span class="input-group-text" >@Task.Name</span>
+	<span class="input-group-text">@Task.Description</span>
+</div>
+
+@code 
+{
+	[Parameter] public TaskDto? Task { get; set; }
+}
